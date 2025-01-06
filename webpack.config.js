@@ -27,24 +27,24 @@ module.exports = {
     ],
     optimization: {
       splitChunks: {
+        chunks: 'all',
+        minSize: 20000,
+        maxSize: 50000,
+        cacheGroups: {
+          default: false, // 禁用預設分割規則
+          common: {
+            test: /[\\/]src[\\/]/,
+            name: 'common', // 固定檔案名稱
+            minChunks: 2,
             chunks: 'all',
-            minSize: 20000,
-            maxSize: 50000,
-            cacheGroups: {
-              default: false, // 禁用預設分割規則
-              common: {
-                test: /[\\/]src[\\/]/,
-                name: 'common', // 固定檔案名稱
-                minChunks: 2,
-                chunks: 'all',
-              },
-              vendors: {
-                test: /[\\/]node_modules[\\/]/,
-                name: 'vendors', // 固定檔案名稱
-                chunks: 'all',
-              },
-            },
           },
+          vendors: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors', // 固定檔案名稱
+            chunks: 'all',
+          },
+        },
+      },
     },
     devServer: {
       static: {
@@ -54,7 +54,10 @@ module.exports = {
         publicPath: '/navigate/',  // 虛擬文件訪問路徑前綴 https://127.0.0.1/navigate/XXX
       },
       port: 8080, // 設定開發伺服器的端口
-      open: true, // 啟動時自動打開瀏覽器
+      https: true, // 啟用 HTTPS
+      open: {
+        target: ['/navigate/'], // 指定子路徑
+      },
       hot: true, // 啟用熱模組替換
     },
     mode: 'production'
