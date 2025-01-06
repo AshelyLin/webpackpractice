@@ -1,5 +1,4 @@
 const path = require('path');
-// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -21,7 +20,6 @@ module.exports = {
         ],
     },
     plugins: [
-      // new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         title: 'Webpack Demo',
         template: './index.html'
@@ -47,6 +45,17 @@ module.exports = {
               },
             },
           },
+    },
+    devServer: {
+      static: {
+        directory: path.resolve(__dirname, 'dist'), // 伺服靜態檔案的路徑
+      },
+      devMiddleware: {
+        publicPath: '/navigate/',  // 虛擬文件訪問路徑前綴 https://127.0.0.1/navigate/XXX
+      },
+      port: 8080, // 設定開發伺服器的端口
+      open: true, // 啟動時自動打開瀏覽器
+      hot: true, // 啟用熱模組替換
     },
     mode: 'production'
 }; 
