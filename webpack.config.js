@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     entry: [
@@ -45,6 +46,21 @@ module.exports = {
           },
         },
       },
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            compress: {
+              drop_console: true,  // 移除console.log
+            },
+            format: {
+              comments: false,   // 移除註解
+            },
+          },
+          parallel: true,   // 啟用多執行緒
+          extractComments: false,   // 不生成LICENSE檔案
+        }),
+      ],
     },
     devServer: {
       static: {
